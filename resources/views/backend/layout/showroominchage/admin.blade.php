@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>BRDB</title>     
+      <title>BRDB</title>
       <!-- Favicon -->
       <link rel="shortcut icon" href="{{ asset('assets') }}/images/favicon.ico" />
       <link rel="stylesheet" href="{{ asset('assets') }}/css/backend-plugin.min.css">
       <link rel="stylesheet" href="{{ asset('assets') }}/css/backend.css?v=1.0.0">
       <link rel="stylesheet" href="{{ asset('assets') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css">
       <link rel="stylesheet" href="{{ asset('assets') }}/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css">
-      <link rel="stylesheet" href="{{ asset('assets') }}/vendor/remixicon/fonts/remixicon.css"> 
+      <link rel="stylesheet" href="{{ asset('assets') }}/vendor/remixicon/fonts/remixicon.css">
       <style type="text/css">
             th {
               padding: 0px; /* adjust as needed */
@@ -117,7 +117,7 @@
   @yield('style')
   <body>
     <div class="wrapper">
-      
+
       <div class="iq-sidebar  sidebar-default ">
           <div class="iq-sidebar-logo d-flex align-items-center justify-content-between">
               <a href="#" class="header-logo">
@@ -131,7 +131,7 @@
               <nav class="iq-sidebar-menu">
                   <ul id="iq-sidebar-toggle" class="iq-menu">
                       <li class="active">
-                          <a href="{{ route('superadmins') }}" class="svg-icon">                        
+                          <a href="{{ route('superadmins') }}" class="svg-icon">
                               <svg  class="svg-icon" id="p-dash1" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                   <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line>
                               </svg>
@@ -148,7 +148,7 @@
                                   <polyline points="10 15 15 20 20 15"></polyline><path d="M4 4h7a4 4 0 0 1 4 4v12"></path>
                               </svg>
                           </a>
-                          
+
                       </li>
                       <li class=" ">
                           <a href="#sale" class="collapsed" data-toggle="collapse" aria-expanded="false">
@@ -206,7 +206,7 @@
               </nav>
               <div class="p-3"></div>
           </div>
-          </div>     
+          </div>
     <div class="iq-top-navbar">
           <div class="iq-navbar-custom">
               <nav class="navbar navbar-expand-lg navbar-light p-0">
@@ -264,31 +264,31 @@
               </nav>
           </div>
     </div>
-    
+
 <!--Main Content Here --->
 <div class="content-page">
     <div class="container-fluid">
 	    @yield('content')
-	</div>    
-</div>	    
+	</div>
+</div>
 <!--End Of Main Content -->
 
     </div>
        <!-- Backend Bundle JavaScript -->
     <script src="{{ asset('assets') }}/js/backend-bundle.min.js"></script>
-    
+
     <!-- Table Treeview JavaScript -->
     <script src="{{ asset('assets') }}/js/table-treeview.js"></script>
 
-    
+
     <!-- Chart Custom JavaScript -->
     <script src="{{ asset('assets') }}/js/customizer.js"></script>
-    
+
     <!-- Chart Custom JavaScript -->
     <script async src="{{ asset('assets') }}/js/chart-custom.js"></script>
     <script src="https://unpkg.com/@launchdarkly/js-client-sdk@6.4.0/dist/ldclient.min.js"></script>
 
-    
+
    <script>
 
      function calculateReturn() {
@@ -381,5 +381,7 @@ myPayInput.addEventListener('input', () => {
 
 
 </script>
+
+  @yield('script')
   </body>
 </html>

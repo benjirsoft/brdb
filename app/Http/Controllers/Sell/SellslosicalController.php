@@ -43,7 +43,7 @@ class SellslosicalController extends Controller
             return redirect()->back()->withErrors('sorry', 'Id Not Found');
         }
 
-        
+
 
     }
 
@@ -53,12 +53,12 @@ class SellslosicalController extends Controller
 
         $validator = Validator::make($request->all(),[
 
-            'paymentid' => 'required',   
+            'paymentid' => 'required',
 
         ]);
 
        if ($validator->fails()) {
-        
+
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -67,7 +67,7 @@ class SellslosicalController extends Controller
         $qty = Session()->get('qty');
         $price = Session()->get('price');
         $totalamount = Session()->get('totalamount');
-        
+
 
         $amount = Cartinfo::where('cartid', $cartids)->sum('totalamount');
         $vat = Cartinfo::where('cartid', $cartids)->sum('vat');
@@ -88,9 +88,9 @@ class SellslosicalController extends Controller
         $invoicedata = Cartinfo::where('cartid', $cartids)->get();
 
 
-        
 
-      
+
+
 
 
         $cartiddelete = DB::table('cartids')->delete();
@@ -135,7 +135,7 @@ class SellslosicalController extends Controller
         return $cartid;
     }
 
-    
+
 
 
     public function addtocart(Request $request)
@@ -145,7 +145,7 @@ class SellslosicalController extends Controller
         $cartids = Session()->get('cartid');
 
 
-        
+
 
         //$discountamount = Posinfo::where('cartid', $cartids)->first();
 
@@ -165,20 +165,19 @@ class SellslosicalController extends Controller
         //$customer = Customer::where('cartid', $cartids)->get();
 
             // Set up Dompdf options (e.g. for including images)
-        
 
-    
+
 
         $cartiddelete = DB::table('cartids')->delete();
 
         session()->forget('cartid');
-    
+
         return redirect()->back();
     }
 
-    
 
-    
+
+
     public function search(Request $request)
     {
 
@@ -232,8 +231,8 @@ class SellslosicalController extends Controller
         $addproduct->created_at = $request->date;
         $addproduct->save();
 
-        //stockupdate here 
-        
+        //stockupdate here
+
         $stocks = Product_stocke::where('barcode', $barcode)->first();
         if ($stocks) {
             $stocks->stock -= $qty;
@@ -246,15 +245,15 @@ class SellslosicalController extends Controller
 
         return redirect()->back()->with('success', 'product added successfully');
 
-        
-    } 
 
-
-      
+    }
 
 
 
-   
+
+
+
+
 
     public function sells(Request $request)
     {
@@ -274,7 +273,7 @@ class SellslosicalController extends Controller
 
 
     }
-}    
+}
 
 
 

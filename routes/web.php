@@ -33,7 +33,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-//superadmin section 
+//superadmin section
 Route::middleware(['auth', 'user-role:superadmin'])->group(function(){
 
     Route::get('/superadmin', [App\Http\Controllers\SuperadminController::class, 'formpage'])->name('superadmins');
@@ -49,7 +49,7 @@ Route::middleware(['auth', 'user-role:superadmin'])->group(function(){
     Route::get('/productdelete/{id}', [ProductCategoryvatController::class, 'deleteproduct'])->name('product-delete');
 
 
-    //add product section 
+    //add product section
     Route::post('/adproduct', [ProductCategoryvatController::class, 'adproduct'])->name('addproduct');
 
     Route::get('/productlist', [ProductCategoryvatlosicalController::class, 'productlist'])->name('productlists');
@@ -76,13 +76,13 @@ Route::middleware(['auth', 'user-role:superadmin'])->group(function(){
     Route::get('/deletecategory/{id}', [ProductCategoryvatController::class, 'deletecategory'])->name('deletecategory');
 
 
-    //end of category section 
+    //end of category section
 
     Route::get('/findproduct/{findproduct}', [ProductCategoryvatController::class, 'findproduct'])->name('findproduct');
 
     Route::get('/findshowroom/{showroomid}', [ProductCategoryvatController::class, 'findshowroom'])->name('findshowroom');
 
-    // purchase product section 
+    // purchase product section
 
     Route::get('/purchase', [PurchasebarcodeformController::class, 'purchaseform'])->name('purchaseform');
 
@@ -98,10 +98,10 @@ Route::middleware(['auth', 'user-role:superadmin'])->group(function(){
 
     Route::post('/purchaseupdate', [PurchasebarcodelosicalController::class, 'updatepurchase'])->name('updatepurchase');
 
-    //end of purchase section 
-    
+    //end of purchase section
 
-    // Workorder section 
+
+    // Workorder section
 
     Route::get('/workorder', [PurchasebarcodelosicalController::class, 'orderorderform'])->name('workorder');
 
@@ -121,7 +121,7 @@ Route::middleware(['auth', 'user-role:superadmin'])->group(function(){
 
     Route::get('/printworkorder/{orderid}', [ProductCategoryvatlosicalController::class, 'printinvoice'])->name('print-workorder');
 
-    //update section 
+    //update section
 
     Route::get('/updateworkorder/{id}', [ProductCategoryvatController::class, 'updateworkorderform'])->name('updateworkorder');
 
@@ -130,21 +130,21 @@ Route::middleware(['auth', 'user-role:superadmin'])->group(function(){
 
 
 
-    //end of workorder 
+    //end of workorder
 
 
-    //print section 
+    //print section
 
     Route::get('/printlabel', [ProductCategoryvatlosicalController::class, 'printbarcode'])->name('print-label');
 
 
     Route::get('/printpurchaseinvoice/{purchaseid}', [ProductCategoryvatlosicalController::class, 'printpurchase'])->name('print-invoice');
 
-    //endofprintsection 
-   
+    //endofprintsection
 
 
-    //suppliar section 
+
+    //suppliar section
     Route::get('/suppliarlist', [SuppliarFormController::class, 'suppliarlist'])->name('suppliarlist');
 
     Route::get('/deletesuppliar/{id}', [SuppliarFormController::class, 'deletesuppliar'])->name('suppliardelete');
@@ -157,14 +157,14 @@ Route::middleware(['auth', 'user-role:superadmin'])->group(function(){
     Route::get('/findsuppliar/{suppliarid}', [ProductCategoryvatController::class, 'findSuppliar'])->name('findsuppliar');
 
 
-    //update section 
+    //update section
 
     Route::get('/updatesuppliar/{id}', [SuppliarFormController::class, 'updatesuppliar'])->name('updatesuppliarform');
 
     Route::post('/suppliarupdate', [SuppliarFormController::class, 'suppliarupdate'])->name('suppliarupdate');
 
 
-   //end of suppliar section 
+   //end of suppliar section
 
     Route::get('/addshowroom', [ShowroomStocklosicalController::class, 'Showroomform'])->name('adshowroomform');
 
@@ -175,9 +175,9 @@ Route::middleware(['auth', 'user-role:superadmin'])->group(function(){
 
     Route::get('/showroomlist', [ShowroomStocklosicalController::class, 'showroomlist'])->name('showroomlist');
 
-    
 
-    
+
+
 
 
     Route::post('/addsubcategory', [ProductCategoryvatlosicalController::class, 'storesubcategory'])->name('addsubcategory');
@@ -247,7 +247,7 @@ Route::middleware(['auth', 'user-role:showroomincharge'])->group(function(){
 
     Route::get('/deletecartitem/{id}', [SellslosicalController::class, 'deletecacrt'])->name('cartdelete');
 
-    //list of sells 
+    //list of sells
 
     Route::get('/sellslist', [SellsFormController::class, 'sellslist'])->name('listsells');
 
@@ -258,29 +258,37 @@ Route::middleware(['auth', 'user-role:showroomincharge'])->group(function(){
     Route::get('/searchdatetodate', [SellsFormController::class, 'searchdatetodate'])->name('datesells');
 
 
+
+    //Search Api
+
+    Route::post('search_product_by_barcode', [SellsFormController::class, 'search_product_by_barcode'])->name('search_product_by_barcode');
+
 });
 
 
-//maintain section 
+//maintain section
 Route::middleware(['auth', 'user-role:maintainadmin'])->group(function(){
 
 
 });
 
-//commity section 
+//commity section
 Route::middleware(['auth', 'user-role:commity'])->group(function(){
 
 
 });
 
-//suppliar section 
+//suppliar section
 Route::middleware(['auth', 'user-role:suppliar'])->group(function(){
 
 
 });
 
-//systemadmin section 
+//systemadmin section
 Route::middleware(['auth', 'user-role:superadmin'])->group(function(){
+
+
+
 
 
 });

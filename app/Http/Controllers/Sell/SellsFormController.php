@@ -29,7 +29,7 @@ class SellsFormController extends Controller
 
 //order = Posinfo::whereBetween('created_at', [$startdate, $enddate])->get();
 
-        
+
 
 //
 
@@ -88,10 +88,22 @@ public function sellsreport($period){
 
         return view('backend.showroomincharge.Sells.sellslist', compact('listsells'));
     }
-    
-    public function sellsform()
+
+    public function sellsform(Request $request)
     {
-        return view('backend.showroomincharge.Sells.ssells');
+        $selectedDate = $request->date ?? null;
+        return view('backend.showroomincharge.Sells.ssells', compact('selectedDate'));
+    }
+
+
+    public function search_product_by_barcode(Request $request){
+        $barcode = $request->barcode;
+        $data = \DB::table('product_stockes')->leftjoin('productinfos', 'product_stockes.productid', 'productinfos.productid')
+                    ->select('productinfos.productname', 'product_stockes.*')
+                    ->where('product_stockes.barcode', $barcode)
+                    ->first();
+        $data = $data ?? false;
+        return response()->json($data);
     }
 
 }
