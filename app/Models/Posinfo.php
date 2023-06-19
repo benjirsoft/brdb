@@ -11,7 +11,7 @@ class Posinfo extends Model
     use HasFactory;
 
 
-
+    protected $fillable = ['cartid', 'totalamount', 'totalvat', 'payment_ref', 'discount'];
 
     public function payment()
     {

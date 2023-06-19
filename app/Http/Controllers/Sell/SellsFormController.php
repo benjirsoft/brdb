@@ -99,7 +99,7 @@ public function sellsreport($period){
     public function search_product_by_barcode(Request $request){
         $barcode = $request->barcode;
         $data = \DB::table('product_stockes')->leftjoin('productinfos', 'product_stockes.productid', 'productinfos.productid')
-                    ->select('productinfos.productname', 'product_stockes.*')
+                    ->select('productinfos.productname','productinfos.productid', 'product_stockes.*')
                     ->where('product_stockes.barcode', $barcode)
                     ->first();
         $data = $data ?? false;

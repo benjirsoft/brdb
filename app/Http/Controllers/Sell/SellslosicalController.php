@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Sell;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Product_stocke;
 use App\Models\User;
@@ -116,9 +117,9 @@ class SellslosicalController extends Controller
     }
     public function generatecartid()
     {
-        $cartid = session()->get('cartid');
+//        $cartid = session()->get('cartid');
 
-        if (!$cartid) {
+//        if (!$cartid) {
             do {
                 $numberPart = mt_rand(100000, 999999); // Generate a 6-digit random number
                 $textPart = strtoupper(substr(uniqid(), -4)); // Generate a 4-character unique string
@@ -129,8 +130,8 @@ class SellslosicalController extends Controller
                 $existingTransaction = Cartproduct::where('cartid', $cartid)->first();
             } while ($existingTransaction); // Repeat the loop if the transaction ID already exists
 
-            session()->put('cartid', $cartid);
-        }
+//            session()->put('cartid', $cartid);
+//        }
 
         return $cartid;
     }
@@ -140,9 +141,69 @@ class SellslosicalController extends Controller
 
     public function addtocart(Request $request)
     {
+//        dd($this->generatecartid());
+//        dd($request->all());
+
+        $cart_id = $this->generatecartid();
+        $products = $request->product;
+        $product = [];
+        foreach($products as $p){
+            $product []= [
+                'cartid' => $cart_id,
+                'barcode' => $p['barcode'],
+                'suppliarid' => $p['supplier_id'],
+                'productid' => $p['id'],
+                'qty' => $p['qty'],
+                'vat' => $p['vat'],
+                'price' => $p['price'],
+                'sale_date' => $request->date,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+        }
+//        dd($product);
+        $insertCart = Cartproduct::insert($product);
+        if($insertCart){
+            $posInfo = [
+                'cartid' => $cart_id,
+                'totalamount' => $request->totalamount,
+                'totalvat' => $request->total_vat,
+                'discount' => $request->total_discount ?? 0,
+            ];
+            $insertPosInfo = Posinfo::create($posInfo);
+
+            $PayRefData = [];
+            foreach($request->payment_method as $key => $item){
+                $PayRefData []= [
+                    'cartid' => $cart_id,
+                    'payment_method' => $key,
+                    'payment_amount' => $request->payment_method[$key] ?? null,
+                    'payment_card_no' => $request->card_number[$key] ?? null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
+            }
+//            dd($request->payment_method['credit_card']);
+            DB::table('pos_payment_ref')->insert($PayRefData);
 
 
-        $cartids = Session()->get('cartid');
+            if($request->total_discount){
+                $customer_data = [
+                    'cartid' => $cart_id,
+                    'name' => $request->customer_name,
+                    'mobile' => $request->customer_mobile,
+                    'discount' => $request->total_discount ?? 0,
+                    'refer' => $request->customer_refer,
+                ];
+                Customer::create($customer_data);
+            }
+        }
+
+
+//        dd($product);
+
+        return redirect()->route('customer_invoice', ['cart_id' => $cart_id]);
+        //$cartids = Session()->get('cartid');
 
 
 
@@ -168,9 +229,9 @@ class SellslosicalController extends Controller
 
 
 
-        $cartiddelete = DB::table('cartids')->delete();
+        //$cartiddelete = DB::table('cartids')->delete();
 
-        session()->forget('cartid');
+        //session()->forget('cartid');
 
         return redirect()->back();
     }

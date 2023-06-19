@@ -257,7 +257,9 @@ Route::middleware(['auth', 'user-role:showroomincharge'])->group(function(){
 
     Route::get('/searchdatetodate', [SellsFormController::class, 'searchdatetodate'])->name('datesells');
 
-
+    Route::get('/customer-invoice', function(){
+       return view ('customer_invoice');
+    })->name('customer_invoice');
 
     //Search Api
 
@@ -286,7 +288,6 @@ Route::middleware(['auth', 'user-role:suppliar'])->group(function(){
 
 //systemadmin section
 Route::middleware(['auth', 'user-role:superadmin'])->group(function(){
-
 
 
 
