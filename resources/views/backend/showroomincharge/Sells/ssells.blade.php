@@ -53,7 +53,7 @@
                                     <input type="hidden" :name="`product[${key}][supplier_id]`" :value="item.supplier_id" id="">
                                     <input type="hidden" :name="`product[${key}][barcode]`" :value="item.barcode" id="">
                                     <input type="hidden" :name="`product[${key}][vat]`" :value="item.vat" id="">
-                                    <input class="qty_input" min="1" type="number" @keyup="qtykeyUp($event, item.price, key)" :name="`product[${key}][qty]`" value="1" id="">
+                                    <input class="qty_input" min="1" type="number" @keyup="qtykeyUp($event, item.price, key)" :name="`product[${key}][qty]`" :value="item.qty" id="">
                                 </td>
                                 <td>@{{item.vat }}</td>
                                 <td>@{{item.price }}</td>
@@ -199,8 +199,17 @@
             methods: {
                 async searchProduct(){
                     let selectedProducts = this.selectedProducts;
-                    // console.log(this.selectedProducts)
-                    // if(checkBarcodeAdded == false){
+                    let barcode = this.selectedBarcode;
+                        let check = false;
+                        for(var i=0; i < selectedProducts.length; i++){
+                            if(selectedProducts[i].barcode == barcode){
+                                check = true
+                                let qty = selectedProducts[i].qty+1
+                                this.selectedProducts[i].qty = qty
+                                this.selectedProducts[i].sub = this.selectedProducts[i].qty*this.selectedProducts[i].price
+                            }
+                        }
+                    if(check == false){
                         let getproduct = await axios.post('search_product_by_barcode', {'barcode': this.selectedBarcode})
                         let product = getproduct.data;
                         this.selectedBarcode = ''
@@ -219,15 +228,19 @@
                             selectedProducts.push(mkProduct)
                             // console.log(this.selectedProducts);
                             await this.qtykeyUp()
+                            this.calculateReturn()
                         }else {
                             this.errorMsg = 'Product not found'
                         }
-                    // }else {
-                    //     this.errorMsg = 'Product already added'
-                    // }
+                    }else {
+                        // this.errorMsg = 'Product already added'
+                        this.selectedBarcode = ''
+                        await this.qtykeyUp()
+                        this.calculateReturn()
+                    }
 
 
-
+                    // console.log(it)
 
                 },
 
@@ -273,6 +286,7 @@
 
                     let vatCalculation = this.totalvat*this.discountValue/100
                     this.totalvat = (this.totalvat-vatCalculation).toFixed(2);
+                    this.calculateReturn()
                 },
                 calculateReturn($event){
                     let payment_method_value = document.querySelectorAll('input.payment_method_value')
